@@ -9,18 +9,14 @@ import "@stream-io/video-react-sdk/dist/css/styles.css";
 
 export const MyLivestreamUI = () => {
   const call = useCall();
-  const {
-    useIsCallLive,
-    useLocalParticipant,
-    useParticipantCount,
-    // ... more hooks
-  } = useCallStateHooks();
+  const { useIsCallLive, useLocalParticipant, useParticipantCount } =
+    useCallStateHooks();
   const totalParticipants = useParticipantCount();
   const localParticipant = useLocalParticipant();
   const isCallLive = useIsCallLive();
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="w-full flex flex-col gap-1">
       <div className=" bg-blue-700 text-white rounded-lg px-1 py-2 w-40">
         Live: {totalParticipants}
       </div>
