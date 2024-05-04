@@ -20,8 +20,8 @@ const callId = process.env.NEXT_PUBLIC_STREAM_CALL_ID as string;
 // set up the user object
 const user: User = {
   id: userId,
-  name: "Oliver",
-  image: "https://getstream.io/random_svg/?id=oliver&name=Oliver",
+  name: "KoichiroShizuya",
+  image: "/public/wait.png",
 };
 
 const client = new StreamVideoClient({ apiKey, user, token });
