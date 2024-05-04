@@ -19,8 +19,10 @@ export const MyLivestreamUI = () => {
 
   return (
     <div className="w-full flex flex-col gap-1">
-      <div className=" bg-blue-700 text-white rounded-lg px-1 py-2 w-40">
-        Live: {totalParticipants}
+      <div className="flex gap-x-2">
+        <p className=" bg-blue-700 text-white rounded-lg px-1 py-2 w-40 text-center">
+          Live: {totalParticipants}
+        </p>
       </div>
       <div className="flex-1">
         {localParticipant && (
