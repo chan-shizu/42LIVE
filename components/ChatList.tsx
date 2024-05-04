@@ -1,3 +1,5 @@
+"use client";
+
 import { TARGET_COLLECTION_NAME, db } from "@/lib/firebase";
 import { collection, onSnapshot } from "firebase/firestore";
 import { FC, useEffect, useRef, useState } from "react";

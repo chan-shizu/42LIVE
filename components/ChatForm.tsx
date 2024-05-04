@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, useState } from "react";
 import { PaymentModal, PaymentMoney } from "./paymentModal";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
