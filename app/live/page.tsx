@@ -1,12 +1,15 @@
 "use client";
 
+import { FC } from "react";
 import {
-  LivestreamLayout,
   StreamCall,
   StreamVideo,
   StreamVideoClient,
   User,
 } from "@stream-io/video-react-sdk";
+import { MyLivestreamUI } from "@/components/MyLivestreamUI";
+
+type Props = {};
 
 const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY as string;
 const token = process.env.NEXT_PUBLIC_STREAM_TOKEN as string;
@@ -22,31 +25,22 @@ console.log(callId);
 // set up the user object
 const user: User = {
   id: userId,
-  name: "Oliver-Viewer",
-  image: "https://getstream.io/random_svg/?id=oliver&name=Oliver-Viewer",
+  name: "Oliver",
+  image: "https://getstream.io/random_svg/?id=oliver&name=Oliver",
 };
 
 const client = new StreamVideoClient({ apiKey, user, token });
 const call = client.call("livestream", callId);
+call.join({ create: true });
 
-// make sure the viewer doesn't accidentally publish audio or video
-call.camera.disable();
-call.microphone.disable();
-
-call.join();
-
-export default function Home() {
+const Page: FC<Props> = ({}) => {
   return (
-    <main className="">
-      <StreamVideo client={client}>
-        <StreamCall call={call}>
-          <LivestreamLayout
-            showParticipantCount={true}
-            showDuration={true}
-            showLiveBadge={true}
-          />
-        </StreamCall>
-      </StreamVideo>
-    </main>
+    <StreamVideo client={client}>
+      <StreamCall call={call}>
+        <MyLivestreamUI />
+      </StreamCall>
+    </StreamVideo>
   );
-}
+};
+
+export default Page;
