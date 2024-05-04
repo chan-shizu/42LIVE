@@ -1,13 +1,13 @@
 "use client";
 
 import { FC, useState } from "react";
-import { PaymentModal, PaymentMoney } from "./paymentModal";
+import { PaymentModal, PaymentMoney } from "./PaymentModal";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { TARGET_COLLECTION_NAME, firebaseApp } from "@/lib/firebase";
 
-type Props = {};
+type Props = { name: string };
 
-export const ChatForm: FC<Props> = ({}) => {
+export const ChatForm: FC<Props> = ({ name }) => {
   const [message, setMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMoney, setPaymentMoney] = useState<PaymentMoney>(100);
@@ -18,7 +18,7 @@ export const ChatForm: FC<Props> = ({}) => {
       const col = collection(db, TARGET_COLLECTION_NAME);
       await addDoc(col, {
         liveId: process.env.NEXT_PUBLIC_STREAM_CALL_ID,
-        name: "currentUser",
+        name: name,
         text: message,
         createdAt: new Date(),
       });

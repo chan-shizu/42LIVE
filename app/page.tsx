@@ -2,6 +2,7 @@
 
 import { ChatForm } from "@/components/ChatForm";
 import { ChatList } from "@/components/ChatList";
+import { NameModal } from "@/components/NameModal";
 import {
   LivestreamLayout,
   StreamCall,
@@ -11,6 +12,7 @@ import {
   User,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
+import { useState } from "react";
 
 const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY as string;
 const token = process.env.NEXT_PUBLIC_STREAM_TOKEN as string;
@@ -34,6 +36,14 @@ call.microphone.disable();
 call.join();
 
 export default function Home() {
+  const [name, setName] = useState("");
+  const [isNameModalOpen, setIsNameModalOpen] = useState(true);
+
+  const updateName = (name: string) => {
+    setName(name);
+    setIsNameModalOpen(false);
+  };
+
   return (
     <main className="w-fill">
       <div className="sticky top-0 w-full">
@@ -53,8 +63,9 @@ export default function Home() {
         <ChatList />
       </div>
       <div className="fixed bottom-0 w-full">
-        <ChatForm />
+        <ChatForm name={name} />
       </div>
+      {isNameModalOpen && <NameModal updateName={updateName} />}
     </main>
   );
 }

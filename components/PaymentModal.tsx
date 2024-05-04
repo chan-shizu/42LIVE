@@ -22,7 +22,7 @@ export const PaymentModal: FC<Props> = ({ closeModal, paymentMoney }) => {
   };
 
   return (
-    <div className="bg-gray-500/50 fixed top-0 eft-0 w-full h-full flex justify-center items-center px-4">
+    <div className="bg-gray-500/50 fixed top-0 left-0 w-full h-full flex justify-center items-center px-4">
       <div className="bg-white w-full py-6 px-4 rounded">
         <p>
           paypayの画面に遷移します!
