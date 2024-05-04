@@ -36,18 +36,20 @@ call.join();
 export default function Home() {
   return (
     <main className="w-fill">
-      <StreamVideo client={client}>
-        <StreamCall call={call}>
-          <StreamTheme as="main" className="[&_video]:w-full">
-            <LivestreamLayout
-              showParticipantCount={true}
-              showDuration={true}
-              showLiveBadge={true}
-            />
-          </StreamTheme>
-        </StreamCall>
-      </StreamVideo>
-      <div className="mt-4">
+      <div className="sticky top-0 w-full">
+        <StreamVideo client={client}>
+          <StreamCall call={call}>
+            <StreamTheme as="main" className="[&_video]:w-full">
+              <LivestreamLayout
+                showParticipantCount={true}
+                showDuration={true}
+                showLiveBadge={true}
+              />
+            </StreamTheme>
+          </StreamCall>
+        </StreamVideo>
+      </div>
+      <div className="mt-4 mb-[132px]">
         <ChatList />
       </div>
       <div className="fixed bottom-0 w-full">

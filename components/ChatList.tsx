@@ -1,25 +1,67 @@
-import { FC } from "react";
+import { TARGET_COLLECTION_NAME, db } from "@/lib/firebase";
+import { collection, onSnapshot } from "firebase/firestore";
+import { FC, useEffect, useRef, useState } from "react";
 
 type Props = {};
 
-const chats = [
-  { text: "はじめてのコメントです", time: "2024/04/04 10:24:15", name: "田中" },
-  { text: "はじめてのコメントです", time: "2024/04/04 10:24:15", name: "田中" },
-  { text: "はじめてのコメントです", time: "2024/04/04 10:24:15", name: "田中" },
-];
+type Chat = {
+  liveId: string;
+  text: string;
+  name: string;
+  createdAt: { nanoseconds: number; seconds: number };
+};
+
+const yyyymmdd = new Intl.DateTimeFormat(undefined, {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+});
 
 export const ChatList: FC<Props> = ({}) => {
+  const [chats, setChats] = useState<Chat[]>([]);
+  const scrollBottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let data;
+    let collectionMessages: Chat[] = [];
+    onSnapshot(collection(db, TARGET_COLLECTION_NAME), (snapshot) => {
+      collectionMessages = [];
+      snapshot.forEach((doc) => {
+        data = doc.data() as Chat;
+        collectionMessages.push(data);
+      });
+      const sortedMessages = collectionMessages.sort(function (a, b) {
+        return a.createdAt.seconds - b.createdAt.seconds;
+      });
+      setChats(sortedMessages);
+    });
+  }, []);
+
+  if (scrollBottomRef && scrollBottomRef.current) {
+    scrollBottomRef.current.scrollIntoView();
+  }
+
   return (
-    <div className="flex flex-col gap-y-4">
-      {chats.map((chat) => (
-        <div className="flex flex-col gap-y-1 px-2">
-          <div className="flex gap-x-2 text-gray-500 text-xs">
-            <p>{chat.name}</p>
-            <p>{chat.time}</p>
+    <div className="flex flex-col gap-y-4 overflow-auto">
+      {chats.map((chat) => {
+        const date = yyyymmdd.format(new Date(chat.createdAt.seconds * 1000));
+        return (
+          <div
+            key={chat.createdAt.seconds}
+            className="flex flex-col gap-y-1 px-2"
+          >
+            <div className="flex gap-x-2 text-gray-500 text-xs">
+              <p>{chat.name}</p>
+              <p>{date}</p>
+            </div>
+            <p>{chat.text}</p>
           </div>
-          <p>{chat.text}</p>
-        </div>
-      ))}
+        );
+      })}
+      <div ref={scrollBottomRef}></div>
     </div>
   );
 };
