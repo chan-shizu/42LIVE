@@ -1,7 +1,7 @@
 "use client";
 
 import { TARGET_COLLECTION_NAME, db } from "@/lib/firebase";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { FC, useEffect, useRef, useState } from "react";
 
 type Props = {};
@@ -29,17 +29,23 @@ export const ChatList: FC<Props> = ({}) => {
   useEffect(() => {
     let data;
     let collectionMessages: Chat[] = [];
-    onSnapshot(collection(db, TARGET_COLLECTION_NAME), (snapshot) => {
-      collectionMessages = [];
-      snapshot.forEach((doc) => {
-        data = doc.data() as Chat;
-        collectionMessages.push(data);
-      });
-      const sortedMessages = collectionMessages.sort(function (a, b) {
-        return a.createdAt.seconds - b.createdAt.seconds;
-      });
-      setChats(sortedMessages);
-    });
+    onSnapshot(
+      query(
+        collection(db, TARGET_COLLECTION_NAME),
+        where("liveId", "==", process.env.NEXT_PUBLIC_STREAM_CALL_ID)
+      ),
+      (snapshot) => {
+        collectionMessages = [];
+        snapshot.forEach((doc) => {
+          data = doc.data() as Chat;
+          collectionMessages.push(data);
+        });
+        const sortedMessages = collectionMessages.sort(function (a, b) {
+          return a.createdAt.seconds - b.createdAt.seconds;
+        });
+        setChats(sortedMessages);
+      }
+    );
   }, []);
 
   if (scrollBottomRef && scrollBottomRef.current) {

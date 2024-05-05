@@ -10,7 +10,6 @@ import {
   StreamVideo,
   StreamVideoClient,
   User,
-  useCallStateHooks,
 } from "@stream-io/video-react-sdk";
 import { useState } from "react";
 
@@ -29,7 +28,6 @@ const user: User = {
 const client = new StreamVideoClient({ apiKey, user, token });
 const call = client.call("livestream", callId);
 
-// make sure the viewer doesn't accidentally publish audio or video
 call.camera.disable();
 call.microphone.disable();
 
@@ -46,13 +44,13 @@ export default function Home() {
 
   return (
     <main className="w-fill">
-      <div className="sticky top-0 w-full">
+      <div className="sticky top-0 w-full bg-white pb-2">
         <StreamVideo client={client}>
           <StreamCall call={call}>
             <StreamTheme as="main" className="[&_video]:w-full">
               <LivestreamLayout
                 showParticipantCount={true}
-                showDuration={true}
+                showDuration={false}
                 showLiveBadge={true}
               />
             </StreamTheme>
