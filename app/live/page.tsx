@@ -6,7 +6,7 @@ import {
   StreamVideo,
   StreamVideoClient,
   User,
-  useCallStateHooks,
+  useCall,
 } from "@stream-io/video-react-sdk";
 import { MyLivestreamUI } from "@/components/MyLivestreamUI";
 import { ChatList } from "@/components/ChatList";

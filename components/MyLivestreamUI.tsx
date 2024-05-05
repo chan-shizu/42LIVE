@@ -8,7 +8,6 @@ import {
 
 // add styles for the video UI
 import "@stream-io/video-react-sdk/dist/css/styles.css";
-import { useEffect } from "react";
 
 export const MyLivestreamUI = () => {
   const call = useCall();
@@ -21,17 +20,8 @@ export const MyLivestreamUI = () => {
   const totalParticipants = useParticipantCount();
   const localParticipant = useLocalParticipant();
   const isCallLive = useIsCallLive();
-  let microphoneUsed = undefined;
-  if (useMicrophoneState) {
-    const { microphone } = useMicrophoneState();
-    microphoneUsed = microphone;
-  }
-
-  useEffect(() => {
-    if (microphoneUsed) {
-      microphoneUsed.enable();
-    }
-  }, []);
+  const { microphone } = useMicrophoneState();
+  microphone.enable();
 
   return (
     <div className="w-full flex flex-col gap-1">
