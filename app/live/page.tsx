@@ -1,14 +1,18 @@
 "use client";
 
-import { FC, useEffect } from "react";
+import dynamic from "next/dynamic";
+const MyLivestreamUI = dynamic(
+  () => import("@/components/MyLivestreamUI").then((mod) => mod.MyLivestreamUI),
+  { ssr: false }
+);
+
+import { FC } from "react";
 import {
   StreamCall,
   StreamVideo,
   StreamVideoClient,
   User,
-  useCall,
 } from "@stream-io/video-react-sdk";
-import { MyLivestreamUI } from "@/components/MyLivestreamUI";
 import { ChatList } from "@/components/ChatList";
 import { ChatForm } from "@/components/ChatForm";
 
