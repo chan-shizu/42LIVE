@@ -9,6 +9,8 @@ import {
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
 import { MyLivestreamUI } from "@/components/MyLivestreamUI";
+import { ChatList } from "@/components/ChatList";
+import { ChatForm } from "@/components/ChatForm";
 
 type Props = {};
 
@@ -36,6 +38,12 @@ const Page: FC<Props> = ({}) => {
           <MyLivestreamUI />
         </StreamCall>
       </StreamVideo>
+      <div className="mt-4 mb-[132px]">
+        <ChatList />
+      </div>
+      <div className="fixed bottom-0 w-full">
+        <ChatForm name={"運営"} isAdmin={true} />
+      </div>
     </div>
   );
 };

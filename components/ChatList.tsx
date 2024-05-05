@@ -10,6 +10,8 @@ type Chat = {
   liveId: string;
   text: string;
   name: string;
+  isAdmin: boolean;
+  paymentMoney?: number;
   createdAt: { nanoseconds: number; seconds: number };
 };
 
@@ -59,7 +61,11 @@ export const ChatList: FC<Props> = ({}) => {
         return (
           <div
             key={chat.createdAt.seconds}
-            className="flex flex-col gap-y-1 px-2"
+            className={`flex flex-col gap-y-1 px-2 ${
+              chat.isAdmin && "bg-gray-200"
+            } ${chat.paymentMoney === 100 && "bg-blue-200"}  ${
+              chat.paymentMoney === 500 && "bg-green-200"
+            }  ${chat.paymentMoney === 1000 && "bg-red-200"}`}
           >
             <div className="flex gap-x-2 text-gray-500 text-xs">
               <p>{chat.name}</p>

@@ -5,9 +5,9 @@ import { PaymentModal, PaymentMoney } from "./PaymentModal";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { TARGET_COLLECTION_NAME, firebaseApp } from "@/lib/firebase";
 
-type Props = { name: string };
+type Props = { name: string; isAdmin?: boolean };
 
-export const ChatForm: FC<Props> = ({ name }) => {
+export const ChatForm: FC<Props> = ({ name, isAdmin = false }) => {
   const [message, setMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMoney, setPaymentMoney] = useState<PaymentMoney>(100);
@@ -18,6 +18,7 @@ export const ChatForm: FC<Props> = ({ name }) => {
       const col = collection(db, TARGET_COLLECTION_NAME);
       await addDoc(col, {
         liveId: process.env.NEXT_PUBLIC_STREAM_CALL_ID,
+        isAdmin: isAdmin,
         name: name,
         text: message,
         createdAt: new Date(),
@@ -75,7 +76,11 @@ export const ChatForm: FC<Props> = ({ name }) => {
         </div>
       </div>
       {isModalOpen && (
-        <PaymentModal closeModal={closeModal} paymentMoney={paymentMoney} />
+        <PaymentModal
+          closeModal={closeModal}
+          paymentMoney={paymentMoney}
+          name={name}
+        />
       )}
     </>
   );
