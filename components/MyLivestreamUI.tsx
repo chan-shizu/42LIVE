@@ -24,7 +24,9 @@ export const MyLivestreamUI = () => {
   const { microphone } = useMicrophoneState();
 
   useEffect(() => {
-    microphone.enable();
+    if (microphone) {
+      microphone.enable();
+    }
   }, []);
 
   return (
