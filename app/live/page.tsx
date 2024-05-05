@@ -42,9 +42,7 @@ const Page: FC<Props> = ({}) => {
         <ChatList />
       </div>
       <div className="fixed bottom-0 w-full">
-        {typeof window != "undefined" && (
-          <ChatForm name={"運営"} isAdmin={true} />
-        )}
+        <ChatForm name={"運営"} isAdmin={true} />
       </div>
     </div>
   );

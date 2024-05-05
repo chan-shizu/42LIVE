@@ -21,11 +21,15 @@ export const MyLivestreamUI = () => {
   const totalParticipants = useParticipantCount();
   const localParticipant = useLocalParticipant();
   const isCallLive = useIsCallLive();
-  const { microphone } = useMicrophoneState();
+  let microphoneUsed = undefined;
+  if (useMicrophoneState) {
+    const { microphone } = useMicrophoneState();
+    microphoneUsed = microphone;
+  }
 
   useEffect(() => {
-    if (microphone) {
-      microphone.enable();
+    if (microphoneUsed) {
+      microphoneUsed.enable();
     }
   }, []);
 
