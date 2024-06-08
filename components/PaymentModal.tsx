@@ -38,8 +38,8 @@ export const PaymentModal: FC<Props> = ({
     } catch (error) {
       console.log(error);
     }
-    const paypayUrl = paymentUrl[paymentMoney];
-    window.open(paypayUrl, "_blank");
+    // const paypayUrl = paymentUrl[paymentMoney];
+    // window.open(paypayUrl, "_blank");
     closeModal();
   };
 
@@ -47,20 +47,11 @@ export const PaymentModal: FC<Props> = ({
     <div className="bg-gray-500/50 fixed top-0 left-0 w-full h-full flex justify-center items-center px-4">
       <div className="bg-white w-full py-6 px-4 rounded">
         <p className="text-red-400 text-lg">
-          本番環境で検証できてないので動かないかも！あと、これって副業になるのかとか確定申告とか必要なのかっていう一抹の不安があります、、
+          paypayの送金画面に移る機能にしようと思ったけど、冷静に考えて贈与税(?)とか大丈夫なのか不安になったので止めました_(._.)_
         </p>
-        <p className="mt-2">
-          paypayの画面に遷移します!
-          <br />
-          paypayの指示に従って操作を行うと{paymentMoney}
-          円が支払われます!
+        <p className="text-red-400 text-lg">
+          決定ボタン押したら払った感じのコメントがでるので良かったら押してみてください
         </p>
-        <details className="mt-2">
-          <summary>法律について</summary>
-          <p>
-            贈与なので年110万円以下なら税金も発生しないし副業にもあたらないと思ってます、、🤔
-          </p>
-        </details>
         <div className="grid grid-cols-2 gap-x-2 mt-4">
           <button onClick={closeModal} className="bg-gray-400 p-3 rounded-full">
             キャンセル
